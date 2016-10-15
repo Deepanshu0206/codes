@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+using namespace std;
+ 
+bool predicate(int mid,const vector<int> &length,int sum){
+	return length[mid]>sum;
+}
+ 
+int main() {
+	// your code goes here
+	int n;
+	while(1){
+		cin>>n;
+		if(n!=0){
+			vector<int> length(n);
+			for(int i=0;i<n;i++){
+				cin>>length[i];
+			}
+			sort(length.begin(),length.end());
+			int ways=0;
+			for(int i=0;i<n;i++){
+				for(int j=i+1;j<n;j++){
+					int sum=length[i]+length[j];
+					int low=j+1;
+					int high=n-1;
+					while(low<high){
+						int mid=low+(high-low)/2;
+						if(predicate(mid,length,sum)){
+							high=mid;
+						}
+						else{
+							low=mid+1;
+						}
+					}
+					if(sum<length[low]){
+						ways+=n-low;
+					}
+				}
+			}
+			cout<<ways<<endl;
+		}
+		else{
+			break;
+		}
+	}
+	return 0;
+} 
