@@ -1,0 +1,33 @@
+#include <iostream>
+#include <algorithm> 
+#include <vector>    
+ 
+using namespace std;
+int main() {
+	// your code goes here
+	int numberofways=0;
+	int n;
+	cin>>n;
+	vector<int> S(n);
+	for(int i=0;i<n;i++){
+		cin>>S[i];
+	}
+	vector<int> lhs;
+	vector<int> rhs;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			for(int k=0;k<n;k++){
+				if(S[k]!=0){
+					lhs.push_back(S[k]*(S[j]+S[i]));
+				}
+				rhs.push_back(S[k]*S[j]+S[i]);
+			}
+		}
+	}
+	sort(rhs.begin(),rhs.end());
+	for(int i=0;i<lhs.size();i++){
+		numberofways+=upper_bound(rhs.begin(),rhs.end(),lhs[i])-lower_bound(rhs.begin(),rhs.end(),lhs[i]);	
+	}
+	cout<<numberofways<<endl;
+	return 0;
+} 
