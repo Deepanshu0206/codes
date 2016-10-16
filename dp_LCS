@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define all(c) c.begin(),c.end() 
+
+int main()
+{
+    int n,m;
+    cin>>n>>m;
+    vector<char> array1(n);
+    vector<char> array2(m);
+    for(int i=0;i<n;i++){
+        cin>>array1[i];
+    }
+    for(int i=0;i<m;i++){
+        cin>>array2[i];
+    }
+    int dp[n+1][m+1];
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=m;j++){
+            if(i==0||j==0){
+                dp[i][j]=0;
+            }
+            else if(array1[i-1]==array2[j-1]){
+                dp[i][j]=1+dp[i-1][j-1];
+            }
+            else{
+                dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+    }
+    cout<<dp[n][m]<<endl;
+    return 0;
+}
